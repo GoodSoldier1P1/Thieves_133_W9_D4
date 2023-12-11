@@ -18,10 +18,10 @@ const BibleSearch = () => {
 
     useEffect(() => {
         getVerse()
-    }, [verse.verseText])
+    }, [verse.verse])
 
     const getVerse = async () => {
-        const response = await fetch(`https://cors-anywhere.herokuapp.com/https://bible-api.com/${verse.verseText}`)    // had  CORS error. This was the fix I found
+        const response = await fetch(`https://bible-api.com/${verse.verse}`)
         // Working on 403 error
         if (response.ok) {
             const data = await response.json()
@@ -32,15 +32,12 @@ const BibleSearch = () => {
                 verse: data.verses[0].verse
             })
         }
-        else {
-            setVerse({ ...verse, verseText: '' })
-        }
     }
     return (
         <>
             <h1 className="text-center">What verse would you like to search?</h1>
             <div className="w-25 mx-auto">
-                <input onChange={(event) => { setVerse({ ...verse, verseText: event.target.value }) }} type="text" />
+                <input onChange={(event) => { setVerse({ ...verse, verseText: event.target.value }) }} type="text" id="searchText" />
             </div>
 
             {verse.verseText &&
